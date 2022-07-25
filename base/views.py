@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 
 # Models
 from django.contrib.auth.models import User
@@ -12,11 +13,13 @@ from .forms import RoomForm
 
 # Login
 def loginPage(request):
+    page = 'login'
+
     if request.user.is_authenticated:
         return redirect('home')
 
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST.get('username').lower()
         password = request.POST.get('password')
 
         try:
@@ -33,7 +36,7 @@ def loginPage(request):
         else:
             messages.error(request, "Username or password incorrect.")
 
-    context = {}
+    context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
 # Logout
@@ -41,6 +44,26 @@ def logoutUser(request):
     logout(request)
     messages.success(request, "Logged out.")
     return redirect('home')
+
+# Register
+def registerPage(request):
+    form = UserCreationForm()
+    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+
+            messages.success(request, "Successfully registered.")
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, "Invalid form data.")
+
+    context = {'form': form}
+    return render(request, 'base/login_register.html', context)
 
 # Home Page
 def home(request):
