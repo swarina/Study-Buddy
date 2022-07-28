@@ -7,9 +7,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 
 # Models
-from django.contrib.auth.models import User
-from .models import Room, Topic, Message
+from .models import Room, Topic, Message, User
 
+# Forms
 from .forms import RoomForm, UserForm
 
 # Login
