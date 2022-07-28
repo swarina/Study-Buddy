@@ -6,7 +6,7 @@ A user-friendly community platform for students to create rooms under topics to 
 
 - **Frontend:** HTML, CSS, Javascript
 - **Backend:** Django
-- **Hosted:** Heroku - <a href="https://youshd-todo-backend.herokuapp.com/">Link</a>
+- **Hosted:** Heroku - <a href="https://study-buddy--app.herokuapp.com/">Link</a>
 - **Version Control:** Git and Github 
 
 ## Getting Started:
